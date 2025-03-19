@@ -77,16 +77,23 @@ const TaskForm: React.FC = () => {
       <button
         type="submit"
         className="btn btn-primary"
-        style={{ width: "100%", position: "relative" }}
+        style={{ width: "100%", position: "relative", minHeight: "38px" }}
         disabled={isLoading}
       >
         {isLoading ? (
           <div
             style={{
+              position: "absolute",
+              top: 0,
+              left: 0,
+              right: 0,
+              bottom: 0,
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
               gap: "0.5rem",
+              backgroundColor: "#007bff",
+              borderRadius: "4px",
             }}
           >
             <Spinner />
