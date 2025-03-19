@@ -131,6 +131,7 @@ A full-stack task management application built with NestJS, React, TypeScript, a
 - `GET /tasks/:id` - Get a specific task
 - `PATCH /tasks/:id` - Update a task
 - `DELETE /tasks/:id` - Delete a task
+- `GET /health` - Check the health of the application
 
 ## Development
 
@@ -139,6 +140,7 @@ A full-stack task management application built with NestJS, React, TypeScript, a
 The frontend is built with Vite and uses TypeScript. Key files:
 
 - `src/components/` - React components
+- `src/assets/` - Assets
 - `src/store/` - Redux store and slices
 - `src/services/` - API service layer
 - `src/index.css` - Global styles
@@ -147,19 +149,15 @@ The frontend is built with Vite and uses TypeScript. Key files:
 
 The backend uses NestJS with TypeScript. Key files:
 
-- `src/controllers/` - Request handlers
-- `src/entities/` - TypeORM entities
-- `src/dto/` - Data Transfer Objects
+- `src/tasks/entities/` - Task TypeORM entities
+- `src/tasks/dto/` - Task Data Transfer Objects
 - `src/migrations/` - Database migrations
-- `src/config/` - Configuration files
-
-## Contributing
-
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add some amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
+- `src/tasks/tasks.controller.ts` - Task Request handlers
+- `src/tasks/tasks.service.ts` - Task Service layer
+- `src/tasks/tasks.module.ts` - Task Module configuration
+- `src/app.controller.ts` - Health check endpoint
+- `src/app.module.ts` - Main module
+- `src/main.ts` - Entry point
 
 ## License
 
