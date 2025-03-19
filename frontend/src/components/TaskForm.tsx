@@ -2,16 +2,19 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { addTask } from "../store/taskSlice";
 import { taskService } from "../services/taskService";
+import Spinner from "./Spinner";
 
 const TaskForm: React.FC = () => {
   const dispatch = useDispatch();
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!title.trim()) return;
 
+    setIsLoading(true);
     try {
       const newTask = await taskService.create({
         title: title.trim(),
@@ -23,13 +26,22 @@ const TaskForm: React.FC = () => {
       setDescription("");
     } catch (err) {
       console.error("Error creating task:", err);
+    } finally {
+      setIsLoading(false);
     }
   };
 
   return (
     <form onSubmit={handleSubmit} style={{ marginBottom: "1.5rem" }}>
       <div className="form-group">
-        <label htmlFor="title" style={{ display: "block", marginBottom: "0.5rem", fontWeight: "500" }}>
+        <label
+          htmlFor="title"
+          style={{
+            display: "block",
+            marginBottom: "0.5rem",
+            fontWeight: "500",
+          }}
+        >
           Title
         </label>
         <input
@@ -39,10 +51,18 @@ const TaskForm: React.FC = () => {
           onChange={(e) => setTitle(e.target.value)}
           className="form-control"
           required
+          disabled={isLoading}
         />
       </div>
       <div className="form-group">
-        <label htmlFor="description" style={{ display: "block", marginBottom: "0.5rem", fontWeight: "500" }}>
+        <label
+          htmlFor="description"
+          style={{
+            display: "block",
+            marginBottom: "0.5rem",
+            fontWeight: "500",
+          }}
+        >
           Description (optional)
         </label>
         <textarea
@@ -51,10 +71,30 @@ const TaskForm: React.FC = () => {
           onChange={(e) => setDescription(e.target.value)}
           className="form-control"
           rows={3}
+          disabled={isLoading}
         />
       </div>
-      <button type="submit" className="btn btn-primary" style={{ width: "100%" }}>
-        Add Task
+      <button
+        type="submit"
+        className="btn btn-primary"
+        style={{ width: "100%", position: "relative" }}
+        disabled={isLoading}
+      >
+        {isLoading ? (
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              gap: "0.5rem",
+            }}
+          >
+            <Spinner />
+            <span>Adding Task...</span>
+          </div>
+        ) : (
+          "Add Task"
+        )}
       </button>
     </form>
   );
